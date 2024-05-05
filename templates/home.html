@@ -1,0 +1,170 @@
+{% load static %}
+
+<!doctype html>
+<html class="no-js" lang="en">
+
+<!-- Mirrored from themegenix.net/html/zaira/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 28 Feb 2024 11:21:10 GMT -->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>News ML - Reading Redifined</title>
+    <meta name="description" content="Zaira - News Magazine HTML Template">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Place favicon.ico in the root directory -->
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/fontawesome-all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/flaticon.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/slick.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/swiper-bundle.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/default.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/responsive.css' %}">
+</head>
+
+<body style="background-image: url('{% static 'assets/img/12.jpg' %}');
+             background-size: cover;
+             background-attachment: fixed;
+             background-position: center;
+             background-color: #b71616; /* Fallback color if image is not available */">
+
+    <!-- preloader -->
+    <div id="preloader">
+        <div class="loader-inner">
+            <div id="loader">
+                <h2 id="bg-loader">ML News<span>.</span></h2>
+                <h2 id="fg-loader">ML News<span>.</span></h2>
+            </div>
+        </div>
+    </div>
+    <!-- preloader-end -->
+
+    <!-- Dark/Light-toggle -->
+    <div class="darkmode-trigger">
+        <label class="modeSwitch">
+            <input type="checkbox">
+            <span class="icon"></span>
+        </label>
+    </div>
+    <!-- Dark/Light-toggle-end -->
+
+    <!-- Scroll-top -->
+    <button class="scroll-top scroll-to-target" data-target="html">
+        <i class="fas fa-angle-up"></i>
+    </button>
+    <!-- Scroll-top-end-->
+
+    <!-- header-area -->
+    <header>
+        <div id="header-fixed-height"></div>
+        <div class="offCanvas-overlay"></div>
+        <!-- offCanvas-area-end -->
+    </header>
+    <!-- header-area-end -->
+
+
+    <!-- main-area -->
+    <main class="fix">
+
+        <!-- featured-post-area -->
+        <section class="featured-post-area pt-60 pb-30">
+            <div class="container">
+                <p>
+                <h2><b><u>Latest News</u></b></h2>
+                </p>
+                <div class="featured-post-wrap">
+                    <div class="row featured-post-active">
+                        {% for i in news_list %}
+                        <div class="col-lg-3">
+                            <div class="featured-post-item">
+                                <div class="featured-post-thumb">
+                                    <a href="{{ i.url }}"><img src="{{ i.image_url }}" alt=""></a>
+                                </div>
+                                <div class="featured-post-content">
+                                    <a href="{{ i.url }}" class="post-tag">Headline</a>
+                                    <h2 class="post-title"><a href="{{ i.url }}">{{ i.title }}</a></h2>
+                                    <div class="blog-post-meta">
+                                        <ul class="list-wrap">
+                                            <li><i class="flaticon-user"></i>by<a href="author.html">{{ i.author }}</a>
+                                            </li>
+                                            <li><i class="flaticon-calendar"></i>{{ i.publishedAt }}</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- featured-post-area-end -->
+
+        <!-- newsletter-area -->
+        <section>
+            <div class="container">
+                <div class="row">
+                    <p>
+                    <h2><b><u>Feeling Bored?? Try These ML Tools</u></b></h2>
+                    </p>
+                    <div class="col-6">
+                        <h4><b>1. Text Summarizer</b></h4>
+                        <p></p>
+                        <form method="POST" action="{% url 'text_summary' %}">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <textarea class="form-control" id="exampleInputEmail1" name="content"
+                                    aria-describedby="emailHelp" placeholder="Enter content"></textarea>
+                                <br>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                        <p></p>
+                        <br>
+                        {% if result %}
+                        <h4><b>Summary</b></h4>
+                        {% for i in result %}
+                        <p><b style="color:black">{{ i.summary_text }}</b></p>
+                        {% endfor %}
+
+                        {% endif %}
+                    </div>
+                    <h4><b>2. Text to Image Generator (Experimental)</b></h4>
+                    <p></p>
+                    <form method="POST" action="{% url 'image_generator' %}">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <textarea class="form-control" id="exampleInputEmail1" name="content"
+                                aria-describedby="emailHelp" placeholder="Enter content"></textarea>
+                            <br>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                    <p></p>
+                    {% if download_image %}
+                    <img src="{% static 'assets/generated/generated_image.jpg' %}" alt="Generated Image" style="max-width: 100%;">
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+
+    <!-- JS here -->
+    <script src="{% static 'assets/js/vendor/jquery-3.6.0.min.js ' %}"></script>
+    <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'assets/js/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'assets/js/slick.min.js' %}"></script>
+    <script src="{% static 'assets/js/swiper-bundle.js' %}"></script>
+    <script src="{% static 'assets/js/ajax-form.js' %}"></script>
+    <script src="{% static 'assets/js/wow.min.js' %}"></script>
+    <script src="{% static 'assets/js/main.js' %}"></script>
+</body>
+
+<!-- Mirrored from themegenix.net/html/zaira/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 28 Feb 2024 11:21:27 GMT -->
+
+</html>
